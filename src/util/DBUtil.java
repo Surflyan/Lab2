@@ -113,7 +113,7 @@ public class DBUtil {
 	}
 	
 	//更新数据库时调用的update 方法
-	public int updateBook (String sql, String[] params) {
+	public int update (String sql, String[] params) {
 		int recNo = 0;          //表示受影响的记录行数
 		try {
 			this.setParams(sql, params);         //根据sql 和 params ，设置 pstmt 对象
@@ -127,19 +127,7 @@ public class DBUtil {
 		return recNo;
 	}
 	
-	public int updateAuthor (String sql, String[] params) {
-		int recNo = 0;          //表示受影响的记录行数
-		try {
-			this.setParams(sql, params);         //根据sql 和 params ，设置 pstmt 对象
-			recNo = pstmt.executeUpdate();       // 执行更新操作
-		}catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			close();
-		}
-		
-		return recNo;
-	}
+
 	
 	//关闭对象
 	private void close() {

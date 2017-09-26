@@ -137,7 +137,7 @@ public class BookInfo<session> extends ActionSupport{
 	public String addBook() {
 		String sql = "insert into bookinfo values(?,?,?,?,?,?)";
 		String[] params = {id,bookname, author, press, pubdate,price};
-		int recNo = db.updateBook(sql, params);
+		int recNo = db.update(sql, params);
 		
 		
 		Map authorInfo = this.getAuthorInfo();
@@ -162,7 +162,7 @@ public class BookInfo<session> extends ActionSupport{
 		authorid = id;
 		String sql = "insert into author_t values(?,?,?,?)";
 		String[] params = {authorid,author, age, country};
-		int recNo = db.updateAuthor(sql, params);
+		int recNo = db.update(sql, params);
 		
 		return "SUCCESS";
 	}
@@ -177,27 +177,38 @@ public class BookInfo<session> extends ActionSupport{
 		
 		String sql = "insert into author_t values(?,?,?,?)";
 		String[] params = {authorid,authorName, age, country};
-		int recNo = db.updateAuthor(sql, params);
+		int recNo = db.update(sql, params);
 		
 		return "ADDSUCCESS";
 	}
 
 	
-	public String updateBook() {
+	public String update() {
 		String sql = "update bookinfo set bookname=?,author=?,"
 				+"press=?,pubdate=?,price=? where id=?";
 		String[] params = {bookname, author, press, pubdate,price,id};
-		int recNo = db.updateBook(sql, params);
-		
+		int recNo = db.update(sql, params);
+
 		return "UPDATESUCCESS";
 	}
 	
 	public String delBook() {
 		String sql = "delete from bookinfo where id = ?";
 		String[] params = {id};
-		int recNo = db.updateBook(sql, params);
+		int recNo = db.update(sql, params);
 		
+		this.delAuthor();
 		return "DELSUCCESS";
+	}
+	//删除作者，当删除书籍时，同时删除对应书籍的作者记录。 只删除作者，则此函数不能正常工作。
+	public String delAuthor() {
+		String sql = "delete from author_t where authorid = ?";
+		authorid = id;
+		String[] params = {authorid};
+		int recNo = db.update(sql, params);
+		
+		return "SUCCESS";
+				
 	}
 	
 	public String getBook() {
@@ -223,6 +234,31 @@ public class BookInfo<session> extends ActionSupport{
 		return "GETSUCCESS";
 	}
 	
+	// 通过书名查询信息
+	public String getBookByName() {
+		Map book = null;
+		Map authorInfo = null;
+		String sql = "select * from bookinfo where bookname = ?";
+		String[] params = {bookname};
+		book = db.getMap(sql, params);
+		
+		if (book == null)
+			return "FAILURE";
+		
+		id = (String) book.get("id");
+		String s = "select * from author_t where authorid = ?";
+		String[] p = {id};
+		authorInfo= db.getMap(s, p);	
+		
+		// getAuthor
+		@SuppressWarnings("rawtypes")
+		Map session = (Map)ActionContext.getContext().getSession();
+		
+		session.put("book", book);
+		session.put("authorInfo", authorInfo);
+		
+		return "SUCCESS";
+	}
 
 	public Map getAuthorInfo() {
 		

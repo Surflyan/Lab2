@@ -17,7 +17,7 @@
  		<action name = "getBook" class = "books.BookInfo" method = "getBook">
  		    <result name = "GETSUCCESS" >/edit.jsp</result>
  		</action>
- 		 <action name = "updateBook" class = "books.BookInfo" method = "updateBook">
+ 		 <action name = "update" class = "books.BookInfo" method = "update">
  		    <result name = "UPDATESUCCESS" type = "redirect">BookInfo.action</result>
  		</action>
  		
@@ -25,6 +25,10 @@
  		    <result name = "ADDSUCCESS" type = "redirect">BookInfo.action</result>
  		</action>
  		
+ 		<action name = "getBookByName" class = "books.BookInfo" method = "getBookByName">
+ 		    <result name = "SUCCESS" >/edit.jsp</result>
+ 		    <result name = "FAILURE">/blank.jsp</result>
+ 		</action>
  
     </package>
 </struts>
