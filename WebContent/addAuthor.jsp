@@ -11,11 +11,11 @@
 
 <form name = "addAuthor" action = "book/addAuthor"  method = "post">
     <% String authorid = (String) session.getAttribute("authorid");%>
-    <input type = hidden name = "authorid" value = authorid>
+    <!--  <input type = hidden name = "authorid" value = authorid> -->
     
 	<table align = "center" width = "30%" border = "1" >
    	 <tr><th>名字: </th>
-        <td><%= session.getAttribute("author")%></td></tr>
+        <td><%= session.getAttribute("authorName")%></td></tr>
    	 <tr><th width = "30%">年龄：</th>
         <td><input type = "text" name = "age"></td></tr>
    	 <tr><th>国籍：</th>

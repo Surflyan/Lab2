@@ -12,7 +12,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 
-public class BookInfo extends ActionSupport{
+public class BookInfo<session> extends ActionSupport{
 
 	private String id;
 	private String bookname;
@@ -114,7 +114,7 @@ public class BookInfo extends ActionSupport{
 		this.country = country;
 	}
 	
-	
+
 	
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {
@@ -139,21 +139,49 @@ public class BookInfo extends ActionSupport{
 		String[] params = {id,bookname, author, press, pubdate,price};
 		int recNo = db.updateBook(sql, params);
 		
-//		Map authorInfo = this.getAuthorInfo();
-//		if(authorInfo == null)
-//		{   Map session = (Map)ActionContext.getContext().getSession();
-//		    session.put("author",author);
-//		    session.put("authorid", id);
-//			return "NOAUTHOR";
-//		}
-//		
-//		else {
-//			this.age =(String)authorInfo.get("age");
-//			this.country =(String)authorInfo.get("country");
-//			this.addAuthor();
-//		}
+		
+		Map authorInfo = this.getAuthorInfo();
+		if(authorInfo == null)
+		{   Map session = (Map)ActionContext.getContext().getSession();
+		    session.put("authorName",author);
+		    session.put("authorid", id);
+			return "NOAUTHOR";
+		}
+		
+		
+		else {
+			this.age =(String)authorInfo.get("age");
+			this.country =(String)authorInfo.get("country");
+			this.addAuthorHadExist();
+		}
 		return "ADDSUCCESS";
 	}
+	
+	//添加已经再数据库作者库中存在的作者，只是authorid 不同。
+	public String addAuthorHadExist() {
+		authorid = id;
+		String sql = "insert into author_t values(?,?,?,?)";
+		String[] params = {authorid,author, age, country};
+		int recNo = db.updateAuthor(sql, params);
+		
+		return "SUCCESS";
+	}
+	
+	
+	
+	//添加本身不在数据库中作者信息
+	public String addAuthor() {
+		Map session = (Map)ActionContext.getContext().getSession();
+		authorid = (String) session.get("authorid");
+		String authorName = (String)session.get("authorName");
+		
+		String sql = "insert into author_t values(?,?,?,?)";
+		String[] params = {authorid,authorName, age, country};
+		int recNo = db.updateAuthor(sql, params);
+		
+		return "ADDSUCCESS";
+	}
+
 	
 	public String updateBook() {
 		String sql = "update bookinfo set bookname=?,author=?,"
@@ -174,44 +202,36 @@ public class BookInfo extends ActionSupport{
 	
 	public String getBook() {
 		Map book = null;
-		Map author = null;
+		Map authorInfo = null;
 		String sql = "select * from bookinfo where id = ?";
 		String[] params = {id};
 		book = db.getMap(sql, params);
 		
 		String s = "select * from author_t where authorid = ?";
 		String[] p = {id};
-		author = db.getMap(s, p);
+		authorInfo= db.getMap(s, p);
 		
 		
 		
 		// getAuthor
 		@SuppressWarnings("rawtypes")
 		Map session = (Map)ActionContext.getContext().getSession();
+		
 		session.put("book", book);
-		session.put("author", author);
+		session.put("authorInfo", authorInfo);
 		
 		return "GETSUCCESS";
 	}
 	
-	
-//	public String addAuthor() {
-//		
-//		String sql = "insert into author_t values(?,?,?,?)";
-//		String[] params = {authorid,author, age, country};
-//		int recNo = db.updateAuthor(sql, params);
-//		
-//		return "ADDSUCCESS";
-//	}
-////	
-//	public Map getAuthorInfo() {
-//		
-//		String s = "select * from author_t where name = ?";
-//		String[] p = {author};
-//		Map authorInfo = db.getMap(s, p);
-//	    
-//		return authorInfo;
-//		
-//	}
+
+	public Map getAuthorInfo() {
+		
+		String s = "select * from author_t where name = ?";
+		String[] p = {author};
+		Map authorInfo = db.getMap(s, p);
+	    
+		return authorInfo;
+		
+	}
 
 }

@@ -18,6 +18,7 @@
     <form nmae = "showBook" action = "book/updateBook" method = "post">
     <table align = "center" width = "30%" border = "1" >
     <tr><th>ISBN: </th>
+        <!-- 最好不可编辑 -->
         <td><input type = "text" name = "id" value ="<%= bookInfo.get("id")%>"></td></tr>
     <tr><th width = "30%">书名：</th>
         <td><input type = "text" name = "bookname" value = "<%= bookInfo.get("bookname")%>"></td></tr>
@@ -43,7 +44,7 @@
         
     
 <%    
-    HashMap author = (HashMap) session.getAttribute("author");
+    HashMap author = (HashMap) session.getAttribute("authorInfo");
     if(author != null) { 	
  %>
     <h2 align = "center">作者信息</h2>
