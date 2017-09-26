@@ -1,0 +1,30 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="books" extends="struts-default" namespace = "/book">
+ 
+        <action name="BookInfo" class="books.BookInfo" >
+            <result name = "LIST">/list.jsp</result>
+ 		</action>
+        <action name="addBook" class="books.BookInfo" method = "addBook">
+ 			<result name = "ADDSUCCESS" type = "redirect">BookInfo.action</result>
+ 			<result name = "NOAUTHOR">/addAuthor.jsp</result>
+ 		</action>
+ 		<action name = "delBook" class = "books.BookInfo" method = "delBook">
+ 		    <result name = "DELSUCCESS" type = "redirect">BookInfo.action</result>
+ 		</action>
+ 		<action name = "getBook" class = "books.BookInfo" method = "getBook">
+ 		    <result name = "GETSUCCESS" >/edit.jsp</result>
+ 		</action>
+ 		 <action name = "updateBook" class = "books.BookInfo" method = "updateBook">
+ 		    <result name = "UPDATESUCCESS" type = "redirect">BookInfo.action</result>
+ 		</action>
+ 		
+ 		<action name = "addAuthor" class = "books.BookInfo" method = "addAuthor">
+ 		    <result name = "ADDSUCCESS" type = "redirect">BookInfo.action</result>
+ 		</action>
+ 		
+ 
+    </package>
+</struts>
