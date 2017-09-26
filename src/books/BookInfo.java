@@ -259,7 +259,24 @@ public class BookInfo<session> extends ActionSupport{
 		
 		return "SUCCESS";
 	}
-
+	
+	public String getBookByAuthor() {
+		List books = null;
+		String sql = "select * from bookinfo where author = ?";
+		String[] params = {author};
+		books = db.getResultList(sql, params);
+		if (books.isEmpty())
+			return "FAILURE";
+		else
+		{
+			@SuppressWarnings("rawtypes")
+			Map session = (Map)ActionContext.getContext().getSession();
+			
+			session.put("books", books);
+		}
+		return "SUCCESS";
+			
+	}
 	public Map getAuthorInfo() {
 		
 		String s = "select * from author_t where name = ?";

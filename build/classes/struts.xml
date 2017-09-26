@@ -29,6 +29,11 @@
  		    <result name = "SUCCESS" >/edit.jsp</result>
  		    <result name = "FAILURE">/blank.jsp</result>
  		</action>
- 
+ 		
+  		<action name = "getBookByAuthor" class = "books.BookInfo" method = "getBookByAuthor">
+ 		    <result name = "SUCCESS" >/showBookList.jsp</result>
+ 		    <result name = "FAILURE">/blank.jsp</result>
+ 		</action>
+ 		
     </package>
 </struts>
