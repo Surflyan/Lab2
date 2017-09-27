@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
 <link rel = "stylesheet" href = "<%=request.getContextPath()%>/book.css">
-<script type = "text/javascript" src = "<%=request.getContextPath()%>/checkAuthor.js"></script>
+
 <title>添加作者信息</title>
 </head>
 
@@ -16,7 +16,7 @@
    	 <tr><th>名字: </th>
         <td><%= session.getAttribute("authorName")%></td></tr>
    	 <tr><th width = "30%">年龄：</th>
-        <td><input type = "text" name = "age"></td></tr>
+        <td><input type = "text" name = "age" pattern = "[0-9]*" title = "年龄必须为数值！"></td></tr>
    	 <tr><th>国籍：</th>
         <td><input type = "text" name = "country"></td></tr>
    	 <tr><th colspan = "2">

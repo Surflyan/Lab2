@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/book.css">
-<script type = "text/javascript" src = "<%=request.getContextPath()%>/paraCheck.js"></script>
+
 <title>图书信息</title>
 </head>
 
@@ -15,7 +15,7 @@
  %>
     <h2 align = "center">图书信息</h2>
     
-    <form name = "book" onSubmit = "return check()" action = "book/update"  method = "post">
+    <form name = "book"  action = "book/update"  method = "post">
     <table align = "center" width = "30%" border = "1" >
     <tr><th>ISBN: </th>
         <!-- ISBN 不可编辑，隐藏传值 -->
@@ -28,9 +28,9 @@
     <tr><th>出版社：</th>
         <td><input type = "text" name = "press" value = "<%= bookInfo.get("press")%>"></td></tr>
     <tr><th>出版日期：</th>
-    	<td><input type = "text" name = "pubdate" value = "<%= bookInfo.get("pubdate")%>" placeholder="1970-01-01"></td></tr>
+    	<td><input type = "text" name = "pubdate" value = "<%= bookInfo.get("pubdate")%>" pattern = "[0-9]{4}-[01]?[0-9]-[0-3]?[0-9]" title = "1970-01-01"  placeholder="1970-01-01"></td></tr>
     <tr><th>价格： </th>
-        <td><input type = "text" name = "price" value = "<%= bookInfo.get("price")%>"></td></tr>
+        <td><input type = "text" name = "price" value = "<%= bookInfo.get("price")%>" pattern = "[0-9]*\.?[0-9]{0,2}" title = "价格错误！" ></td></tr>
     <tr><th colspan = "3">
             <input type = "submit" value = "修改">
             <input type = "reset" value = "重置">

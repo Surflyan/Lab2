@@ -7,6 +7,10 @@
  */
 
 
+//TO-DO isbn 查重 ，返回错误界面，max length，数字，- ，出版日期。
+//TO-DO 输入格式检查，正则检查
+//edit 界面缺少删除功能
+
 package books;
 
 import java.util.List;
@@ -20,8 +24,7 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-//TO-DO isbn 查重
-//TO-DO 输入格式检查，正则检查
+
 public class BookInfo<session> extends ActionSupport{
 
 	private String id;
@@ -81,8 +84,6 @@ public class BookInfo<session> extends ActionSupport{
 	public void setPrice(String price) {
 		this.price = price;
 	}
-
-	
 
 	
 	public String getAuthorid() {
@@ -290,6 +291,8 @@ public class BookInfo<session> extends ActionSupport{
 		return "SUCCESS";
 			
 	}
+	
+	
 	public Map getAuthorInfo() {
 		
 		String s = "select * from author_t where name = ?";
