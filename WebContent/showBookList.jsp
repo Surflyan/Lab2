@@ -2,8 +2,8 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-<link rel="stylesheet" href="../book.css">
-<script type = "text/javascript" src = "../paraCheck.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/book.css">
+<script type = "text/javascript" src = "<%=request.getContextPath()%>/paraCheck.js"></script>
 <title>图书信息</title>
 </head>
 

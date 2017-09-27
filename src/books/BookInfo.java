@@ -11,7 +11,8 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-
+//TO-DO isbn 查重
+//TO-DO 输入格式检查，正则检查
 public class BookInfo<session> extends ActionSupport{
 
 	private String id;

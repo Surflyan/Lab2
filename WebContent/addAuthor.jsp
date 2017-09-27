@@ -2,8 +2,8 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-<link rel = "stylesheet" href = "../book.css">
-<script type = "text/javascript" src = "../checkAuthor.js"></script>
+<link rel = "stylesheet" href = "<%=request.getContextPath()%>/book.css">
+<script type = "text/javascript" src = "<%=request.getContextPath()%>/checkAuthor.js"></script>
 <title>添加作者信息</title>
 </head>
 

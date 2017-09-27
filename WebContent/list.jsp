@@ -3,10 +3,9 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-<link rel="stylesheet" href="../book.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/book.css">
 <title>图书管理系统</title>
 </head>
-
 <body>
 
 <h2 align= "center">图书管理系统 </h2>
@@ -15,7 +14,7 @@
 <form name = "query" action = "book/getBookByName" method = "post">
 <p align = "center">
 <tr><th>书名查询</th>
-    <td><input type = "text" name = "bookname"><input type = "submit" value = "查询"></td></tr>
+    <td><input type = "text" name = "bookname" placeholder="输入书名"><input type = "submit" value = "查询"></td></tr>
 </p>
 </form>
 
@@ -24,12 +23,12 @@
 <form name = "query" action = "book/getBookByAuthor" method = "post">
 <p align = "center">
 <tr><th>作者查询</th>
-    <td><input type = "text" name = "author"><input type = "submit" value = "查询"></td></tr>
+    <td><input type = "text" name = "author" placeholder="输入作者"><input type = "submit" value = "查询"></td></tr>
 </p>
 </form>
 
    
-<p align = "center"><a href = "../add.html">添加图书信息</a></p>
+<p align = "center"><a href = "<%=request.getContextPath()%>/add.html">添加图书信息</a></p>
 
 <table align = "center" border = "3" width = "50%" >
     <tr><th>ISBN</th><th>书名</th><th>作者</th><th>出版社</th><th>出版日期</th><th>价格</th><th>管理</th></tr>

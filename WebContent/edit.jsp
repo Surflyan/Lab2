@@ -2,8 +2,8 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-<link rel="stylesheet" href="../book.css">
-<script type = "text/javascript" src = "../paraCheck.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/book.css">
+<script type = "text/javascript" src = "<%=request.getContextPath()%>/paraCheck.js"></script>
 <title>图书信息</title>
 </head>
 
@@ -28,12 +28,13 @@
     <tr><th>出版社：</th>
         <td><input type = "text" name = "press" value = "<%= bookInfo.get("press")%>"></td></tr>
     <tr><th>出版日期：</th>
-    	<td><input type = "text" name = "pubdate" value = "<%= bookInfo.get("pubdate")%>"></td></tr>
+    	<td><input type = "text" name = "pubdate" value = "<%= bookInfo.get("pubdate")%>" placeholder="1970-01-01"></td></tr>
     <tr><th>价格： </th>
         <td><input type = "text" name = "price" value = "<%= bookInfo.get("price")%>"></td></tr>
-    <tr><th colspan = "2">
+    <tr><th colspan = "3">
             <input type = "submit" value = "修改">
-            <input type = "reset" value = "重置"></th></tr>
+            <input type = "reset" value = "重置">
+            
             
     </table>
     </form>
