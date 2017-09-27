@@ -1,3 +1,12 @@
+
+/*
+ * 图书管理系统
+ * 以ISBN(id) 作为书籍bookinfo 的主键，以authorid作为作者表的主键，但authorid 存储的实为ISBN的值。俩表连接，依靠共有信息ISBN的值，没有使用多表连接，使用子查询。
+ * 插入一本书的时候，检查作者是否存在，如不存在，则跳转到添加作者页面，作者姓名不可更改；如存在，则将作者信息authorid 改为此书的ISBN，其他信息和已存在信息相同，再存入作者表，后台完成。
+ * 做了参数检查，ISBN不可重复，如重复则弹出ISBN 已重复。price isbn 做了检查，其余待做。
+ */
+
+
 package books;
 
 import java.util.List;
@@ -158,7 +167,7 @@ public class BookInfo<session> extends ActionSupport{
 		return "ADDSUCCESS";
 	}
 	
-	//添加已经再数据库作者库中存在的作者，只是authorid 不同。
+	//添加在数据库作者库中存在的作者，只是authorid 不同。
 	public String addAuthorHadExist() {
 		authorid = id;
 		String sql = "insert into author_t values(?,?,?,?)";
@@ -184,6 +193,7 @@ public class BookInfo<session> extends ActionSupport{
 	}
 
 	
+	//更新数据库 书的表
 	public String update() {
 		String sql = "update bookinfo set bookname=?,author=?,"
 				+"press=?,pubdate=?,price=? where id=?";
@@ -212,6 +222,7 @@ public class BookInfo<session> extends ActionSupport{
 				
 	}
 	
+	//通过 ISBN 即 id 查询书籍，同时取出该书的作者信息，放入session
 	public String getBook() {
 		Map book = null;
 		Map authorInfo = null;
@@ -235,7 +246,7 @@ public class BookInfo<session> extends ActionSupport{
 		return "GETSUCCESS";
 	}
 	
-	// 通过书名查询信息
+	// 通过书名查询信息，同时取出该书作者信息，放入session
 	public String getBookByName() {
 		Map book = null;
 		Map authorInfo = null;
@@ -261,6 +272,7 @@ public class BookInfo<session> extends ActionSupport{
 		return "SUCCESS";
 	}
 	
+	// 通过作者查询该作者所著的所有书籍
 	public String getBookByAuthor() {
 		List books = null;
 		String sql = "select * from bookinfo where author = ?";
