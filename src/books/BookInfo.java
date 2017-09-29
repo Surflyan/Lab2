@@ -1,7 +1,7 @@
 
 /*
  * 图书管理系统
- * 以ISBN(id) 作为书籍bookinfo 的主键，以authorid作为作者表的主键，俩表连接，依靠共有信息 authorid的值，没有使用多表连接，使用子查询。
+ * 以ISBN(id) 作为书籍bookinfo 的主键，以authorid作为作者表的主键，两表连接，依靠共有信息 authorid的值，没有使用多表连接，使用子查询。
  * 插入一本书后，根据author 检查作者是否存在，如不存在，则跳转到添加作者页面，作者authorid不可更改；如存在,不做更改. 作者信息只插一次。
  * 删除书籍，只删除 bookinfo 表里的信息，作者信息不做处理。
  * 做了参数检查，ISBN不可重复，如重复则弹出ISBN 已重复。price isbn pubdate做了检查.
@@ -14,6 +14,8 @@
 
 package books;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import util.DBUtil;
@@ -147,6 +149,19 @@ public class BookInfo<session> extends ActionSupport{
 	
 	//添加书的信息并且检查根据authorid有无作者，无作者返回"NOAUTHOR",作者存在,返回ADDSUCCESS;
 	public String addBook() {
+		
+		Map session = (Map)ActionContext.getContext().getSession();
+		
+		// ISBN 查重
+		String s = "select * from bookinfo where id =?";
+		String[] p = {id};
+		Map bookInfo = db.getMap(s, p);
+		if (bookInfo != null) {
+			session.put("isExists", "true");
+			return "BOOKEXISTS";
+		}
+		
+		
 		String sql = "insert into bookinfo values(?,?,?,?,?,?)";
 		String[] params = {id,bookname, author, press, pubdate,price};
 		int recNo = db.update(sql, params);
@@ -154,7 +169,7 @@ public class BookInfo<session> extends ActionSupport{
 		
 		Map authorInfo = this.getAuthorInfo();
 		if(authorInfo == null)
-		{   Map session = (Map)ActionContext.getContext().getSession();
+		{   
 		    session.put("authorid", author);
 			return "NOAUTHOR";
 		}
@@ -248,18 +263,30 @@ public class BookInfo<session> extends ActionSupport{
 		return "SUCCESS";
 	}
 	
-	// 通过作者查询该作者所著的所有书籍
+	// 通过作者查询该作者所著的所有书籍,可同名不同作者查找
 	public String getBookByAuthor() {
-		List books = null;
+		List books = new ArrayList();
+		List authorInfo = null;
 		
 		String s = "select * from author_t where name = ?";
 		String[] p = {name};
-		Map authorInfo = db.getMap(s, p);
-		author = (String) authorInfo.get("authorid");
+		authorInfo = db.getResultList(s, p);
+		if (authorInfo == null) {
+			return "NOBOOK";
+		}
+		for (Object o : authorInfo) {
+			List temp;
+			Map m = (HashMap) o;
+			author = (String) m.get("authorid");
+			
+			String sql = "select * from bookinfo where author = ?";
+			String[] params = {author};
+			temp = db.getResultList(sql, params);
+			books.addAll(temp);
+				
+		}
 		
-		String sql = "select * from bookinfo where author = ?";
-		String[] params = {author};
-		books = db.getResultList(sql, params);
+	
 		if (books.isEmpty())
 			return "NOBOOK";
 		else
