@@ -23,13 +23,15 @@
 <form name = "query" action = "book/getBookByAuthor" method = "post">
 <p align = "center">
 <tr><th>作者查询</th>
-    <td><input type = "text" name = "author" placeholder="输入作者"><input type = "submit" value = "查询"></td></tr>
+    <td><input type = "text" name = "name" placeholder="输入作者"><input type = "submit" value = "查询"></td></tr>
 </p>
 </form>
 
 <br>
    
 <p align = "center"><a href = "<%=request.getContextPath()%>/add.html">添加图书信息</a></p>
+
+<br>
 
 <table align = "center" border = "3" width = "50%" >
     <tr><th>ISBN</th><th>书名</th><th>作者</th><th>出版社</th><th>出版日期</th><th>价格</th><th>管理</th></tr>

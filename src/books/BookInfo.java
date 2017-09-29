@@ -1,14 +1,15 @@
 
 /*
  * 图书管理系统
- * 以ISBN(id) 作为书籍bookinfo 的主键，以authorid作为作者表的主键，但authorid 存储的实为ISBN的值。俩表连接，依靠共有信息ISBN的值，没有使用多表连接，使用子查询。
- * 插入一本书的时候，检查作者是否存在，如不存在，则跳转到添加作者页面，作者姓名不可更改；如存在，则将作者信息authorid 改为此书的ISBN，其他信息和已存在信息相同，再存入作者表，后台完成。
- * 做了参数检查，ISBN不可重复，如重复则弹出ISBN 已重复。price isbn 做了检查，其余待做。
+ * 以ISBN(id) 作为书籍bookinfo 的主键，以authorid作为作者表的主键，俩表连接，依靠共有信息 authorid的值，没有使用多表连接，使用子查询。
+ * 插入一本书后，根据author 检查作者是否存在，如不存在，则跳转到添加作者页面，作者authorid不可更改；如存在,不做更改. 作者信息只插一次。
+ * 删除书籍，只删除 bookinfo 表里的信息，作者信息不做处理。
+ * 做了参数检查，ISBN不可重复，如重复则弹出ISBN 已重复。price isbn pubdate做了检查.
  */
 
 
-//TO-DO isbn 查重 ，返回错误界面，max length，数字，- ，出版日期。
-//TO-DO 输入格式检查，正则检查
+//TO-DO isbn 查重 ，返回错误界面。 throw 出错误
+//TO-DO 增加 author id
 //edit 界面缺少删除功能
 
 package books;
@@ -29,7 +30,7 @@ public class BookInfo<session> extends ActionSupport{
 
 	private String id;
 	private String bookname;
-	private String author;
+	private String author;        //author_id
 	private String press;
 	private String pubdate;
 	private String price;
@@ -37,7 +38,7 @@ public class BookInfo<session> extends ActionSupport{
 	
 
 	private String authorid;
-	private String name;
+	private String name;         //author_name
 	private String age;
 	private String country;
 	
@@ -144,7 +145,7 @@ public class BookInfo<session> extends ActionSupport{
 	}
 	
 	
-	//添加书的信息并且检查有无作者，无作者返回"NOAUTHOR",有作者则添加对应将authorid设为书的id，再插入一条作者信息。返回"SUCCESS";
+	//添加书的信息并且检查根据authorid有无作者，无作者返回"NOAUTHOR",作者存在,返回ADDSUCCESS;
 	public String addBook() {
 		String sql = "insert into bookinfo values(?,?,?,?,?,?)";
 		String[] params = {id,bookname, author, press, pubdate,price};
@@ -154,40 +155,22 @@ public class BookInfo<session> extends ActionSupport{
 		Map authorInfo = this.getAuthorInfo();
 		if(authorInfo == null)
 		{   Map session = (Map)ActionContext.getContext().getSession();
-		    session.put("authorName",author);
-		    session.put("authorid", id);
+		    session.put("authorid", author);
 			return "NOAUTHOR";
 		}
 		
-		
-		else {
-			this.age =(String)authorInfo.get("age");
-			this.country =(String)authorInfo.get("country");
-			this.addAuthorHadExist();
-		}
-		return "ADDSUCCESS";
-	}
-	
-	//添加在数据库作者库中存在的作者，只是authorid 不同。
-	public String addAuthorHadExist() {
-		authorid = id;
-		String sql = "insert into author_t values(?,?,?,?)";
-		String[] params = {authorid,author, age, country};
-		int recNo = db.update(sql, params);
-		
-		return "SUCCESS";
+		else
+			return "ADDSUCCESS";
 	}
 	
 	
-	
-	//添加本身不在数据库中作者信息
+	//添加作者信息 在addBook 调用，独立不可使用
 	public String addAuthor() {
 		Map session = (Map)ActionContext.getContext().getSession();
 		authorid = (String) session.get("authorid");
-		String authorName = (String)session.get("authorName");
 		
 		String sql = "insert into author_t values(?,?,?,?)";
-		String[] params = {authorid,authorName, age, country};
+		String[] params = {authorid,name, age, country};
 		int recNo = db.update(sql, params);
 		
 		return "ADDSUCCESS";
@@ -196,34 +179,24 @@ public class BookInfo<session> extends ActionSupport{
 	
 	//更新数据库 书的表
 	public String update() {
-		String sql = "update bookinfo set bookname=?,author=?,"
+		String sql = "update bookinfo set bookname=?,"
 				+"press=?,pubdate=?,price=? where id=?";
-		String[] params = {bookname, author, press, pubdate,price,id};
+		String[] params = {bookname, press, pubdate,price,id};
 		int recNo = db.update(sql, params);
 
 		return "UPDATESUCCESS";
 	}
 	
 	public String delBook() {
-		String sql = "delete from bookinfo where id = ?";
-		String[] params = {id};
-		int recNo = db.update(sql, params);
+
 		
-		this.delAuthor();
+		String s = "delete from bookinfo where id = ?";
+		String[] p = {id};
+		int recNo = db.update(s, p);
 		return "DELSUCCESS";
 	}
-	//删除作者，当删除书籍时，同时删除对应书籍的作者记录。 只删除作者，则此函数不能正常工作。
-	public String delAuthor() {
-		String sql = "delete from author_t where authorid = ?";
-		authorid = id;
-		String[] params = {authorid};
-		int recNo = db.update(sql, params);
-		
-		return "SUCCESS";
-				
-	}
 	
-	//通过 ISBN 即 id 查询书籍，同时取出该书的作者信息，放入session
+	//通过 ISBN 即 id 查询书籍，同时根据authorid取出该书的作者信息，放入session
 	public String getBook() {
 		Map book = null;
 		Map authorInfo = null;
@@ -231,8 +204,10 @@ public class BookInfo<session> extends ActionSupport{
 		String[] params = {id};
 		book = db.getMap(sql, params);
 		
+		authorid = (String) book.get("author");
+		
 		String s = "select * from author_t where authorid = ?";
-		String[] p = {id};
+		String[] p = {authorid};
 		authorInfo= db.getMap(s, p);
 		
 		
@@ -256,11 +231,11 @@ public class BookInfo<session> extends ActionSupport{
 		book = db.getMap(sql, params);
 		
 		if (book == null)
-			return "FAILURE";
+			return "NOBOOK";
 		
-		id = (String) book.get("id");
+		authorid = (String) book.get("author");
 		String s = "select * from author_t where authorid = ?";
-		String[] p = {id};
+		String[] p = {authorid};
 		authorInfo= db.getMap(s, p);	
 		
 		// getAuthor
@@ -276,11 +251,17 @@ public class BookInfo<session> extends ActionSupport{
 	// 通过作者查询该作者所著的所有书籍
 	public String getBookByAuthor() {
 		List books = null;
+		
+		String s = "select * from author_t where name = ?";
+		String[] p = {name};
+		Map authorInfo = db.getMap(s, p);
+		author = (String) authorInfo.get("authorid");
+		
 		String sql = "select * from bookinfo where author = ?";
 		String[] params = {author};
 		books = db.getResultList(sql, params);
 		if (books.isEmpty())
-			return "FAILURE";
+			return "NOBOOK";
 		else
 		{
 			@SuppressWarnings("rawtypes")
@@ -295,7 +276,7 @@ public class BookInfo<session> extends ActionSupport{
 	
 	public Map getAuthorInfo() {
 		
-		String s = "select * from author_t where name = ?";
+		String s = "select * from author_t where authorid = ?";
 		String[] p = {author};
 		Map authorInfo = db.getMap(s, p);
 	    

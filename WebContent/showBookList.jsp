@@ -13,7 +13,7 @@
 <p align = "center">图书信息</a></p>
 
 <table align = "center" border = "3" width = "50%" >
-    <tr><th>ISBN</th><th>书名</th><th>作者</th><th>出版社</th><th>出版日期</th><th>价格</th><th>管理</th></tr>
+    <tr><th>ISBN</th><th>书名</th><th>作者ID</th><th>出版社</th><th>出版日期</th><th>价格</th><th>管理</th></tr>
     
     <%
     List booksInfo = (List) session.getAttribute("books");

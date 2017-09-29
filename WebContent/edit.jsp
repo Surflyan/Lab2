@@ -22,15 +22,15 @@
         <input type = "hidden" name = "id" value = "<%= bookInfo.get("id")%>">
         <td><%= bookInfo.get("id")%></td></tr>
     <tr><th width = "30%">书名：</th>
-        <td><input type = "text" name = "bookname" value = "<%= bookInfo.get("bookname")%>"></td></tr>
-    <tr><th>作者：</th>
-        <td><input type = "text" name = "author" value = "<%= bookInfo.get("author")%>"></td></tr>
+        <td><input type = "text" name = "bookname" value = "<%= bookInfo.get("bookname")%>" required = "required"  ></td></tr>
+    <tr><th>作者ID：</th>
+        <td><%= bookInfo.get("author")%></td></tr>
     <tr><th>出版社：</th>
         <td><input type = "text" name = "press" value = "<%= bookInfo.get("press")%>"></td></tr>
     <tr><th>出版日期：</th>
     	<td><input type = "text" name = "pubdate" value = "<%= bookInfo.get("pubdate")%>" pattern = "[0-9]{4}-[01]?[0-9]-[0-3]?[0-9]" title = "1970-01-01"  placeholder="1970-01-01"></td></tr>
     <tr><th>价格： </th>
-        <td><input type = "text" name = "price" value = "<%= bookInfo.get("price")%>" pattern = "[0-9]*\.?[0-9]{0,2}" title = "价格错误！" ></td></tr>
+        <td><input type = "text" name = "price" value = "<%= bookInfo.get("price")%>" pattern = "[0-9]*\.?[0-9]{0,2}" required = "required" title = "价格错误！" ></td></tr>
     <tr><th colspan = "3">
             <input type = "submit" value = "修改">
             <input type = "reset" value = "重置">
@@ -52,6 +52,8 @@
     <h2 align = "center">作者信息</h2>
     
     <table align = "center" width = "30%" border = "1" >
+        <tr><th>作者ID：</th>
+       		 <td><%= author.get("authorid")%></td></tr>
     	<tr><th width = "30%">名字: </th>
        		 <td><%= author.get("name")%></td></tr>
    	 	<tr><th>年龄：</th>

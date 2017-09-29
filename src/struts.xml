@@ -27,12 +27,12 @@
  		
  		<action name = "getBookByName" class = "books.BookInfo" method = "getBookByName">
  		    <result name = "SUCCESS" >/edit.jsp</result>
- 		    <result name = "FAILURE">/blank.jsp</result>
+ 		    <result name = "NOBOOK">/blank.jsp</result>
  		</action>
  		
   		<action name = "getBookByAuthor" class = "books.BookInfo" method = "getBookByAuthor">
  		    <result name = "SUCCESS" >/showBookList.jsp</result>
- 		    <result name = "FAILURE">/blank.jsp</result>
+ 		    <result name = "NOBOOK">/blank.jsp</result>
  		</action>
  		
     </package>

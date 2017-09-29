@@ -10,11 +10,13 @@
 <body>
 <h2 align = "center">添加作者信息</h2>
 
-<form name = "author" onSubmit = "return check()" action = "book/addAuthor"  method = "post">
+<form name = "author"  action = "book/addAuthor"  method = "post">
     
 	<table align = "center" width = "30%" border = "1" >
-   	 <tr><th>名字: </th>
-        <td><%= session.getAttribute("authorName")%></td></tr>
+   	 <tr><th>作者ID: </th>
+        <td><%= session.getAttribute("authorid")%></td></tr>
+     <tr><th>姓名：</th>
+        <td><input type = "text" name = "name" required = "required"></td></tr>
    	 <tr><th width = "30%">年龄：</th>
         <td><input type = "text" name = "age" pattern = "[0-9]*" title = "年龄必须为数值！"></td></tr>
    	 <tr><th>国籍：</th>
