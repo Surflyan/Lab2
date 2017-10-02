@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<h2 align = "center">添加作者信息</h2>
+<h3 align = "center">添加作者信息</h3>
 
 <form name = "author"  action = "book/addAuthor"  method = "post">
     

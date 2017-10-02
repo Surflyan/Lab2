@@ -11,7 +11,7 @@ if (isExists !=null && isExists.equals("true")) {
 %>
 <script type="text/javascript" language="javascript">
 	alert("此书已存在");                                            // 弹出错误信息
-	window.location="<%=request.getContextPath()%>/list.jsp" ;                            // 跳转到登录界面
+	window.location="<%=request.getContextPath()%>/index.jsp" ;                            // 跳转到登录界面
 </script> 
 
 <%
@@ -21,7 +21,7 @@ else {
 
 <script type="text/javascript" language="javascript">
 	alert("没有查到书籍信息");                                            
-	window.location="<%=request.getContextPath()%>/list.jsp" ;
+	window.location="<%=request.getContextPath()%>/index.jsp" ;
 </script> 
 <%
 }

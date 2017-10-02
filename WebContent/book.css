@@ -8,9 +8,9 @@ body,table,td,input {
     font-size : 14px;
 }
 
-h2{
+h3{
     color: #000FFF;
-    font-family : 仿宋；
+    font-family : 浠垮畫锛�
     font-weight: bold;
     font-size : 20 px;
     text-align: center;
@@ -33,7 +33,7 @@ table {
 table th {
     color: #2467FA;
     background: #DADADA;
-    font-family: 仿宋;
+    font-family: 浠垮畫;
     font-size: 16px;
     border: 1px solid #FFFFFF;
 }

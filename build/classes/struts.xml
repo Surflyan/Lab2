@@ -10,6 +10,7 @@
         <action name="addBook" class="books.BookInfo" method = "addBook">
  			<result name = "ADDSUCCESS" type = "redirect">BookInfo.action</result>
  			<result name = "NOAUTHOR">/addAuthor.jsp</result>
+ 			<result name = "BOOKEXISTS">/blank.jsp</result>
  		</action>
  		<action name = "delBook" class = "books.BookInfo" method = "delBook">
  		    <result name = "DELSUCCESS" type = "redirect">BookInfo.action</result>

@@ -1,20 +1,16 @@
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ page pageEncoding = "utf-8" import = "java.util.*" %>
 <html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <head>
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/book.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-beta.1.css" type="text/css"> </head>
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/book.css">
+  <script type = "text/javascript" src = "<%=request.getContextPath()%>/paraCheck.js"></script>
+  <title>图书信息</title>
   
-  
-<title>图书管理系统</title>
-</head>
-
-<body>
 <body>
   <nav class="navbar navbar-expand-md bg-secondary navbar-dark">
     <div class="container">
@@ -44,40 +40,40 @@
     </div>
   </nav>
   
-
-
-
-<br>
-<br>
-
-<table align = "center" border = "3" width = "50%" >
-    <tr><th>ISBN</th><th>书名</th><th>作者</th><th>出版社</th><th>出版日期</th><th>价格</th><th>管理</th></tr>
-    
-    <%
-    List booksInfo = (List) session.getAttribute("books");
-    if(booksInfo != null) {
-    	for(Object o: booksInfo) {
-    		Map m = (HashMap) o;
-    %>
-
-    <tr><td><%= m.get("id") %></td>
-        <td><a href = "getBook.action?id=<%= m.get("id")%>"><%= m.get("bookname") %></a></td>
-        <td><%= m.get("author") %></td>
-        <td><%= m.get("press") %></td>
-        <td><%= m.get("pubdate") %></td>
-        <td><%= m.get("price") %></td>
-        <td>
-            <a href = "getBook.action?id=<%= m.get("id")%>">修改</a>&nbsp;
-			<a href = "delBook.action?id=<%= m.get("id")%>" onclick = "return confirm('确定要删除吗?')">删除</a>
-        </td>
-    </tr>
-    
-
-    <%
-    	}
-       }
-     %>
-
-</table>
+    <div class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="text-center display-3 text-primary">About</h1>
+          
+          <h3>功能介绍</h3>
+          <ol>
+             <li>通过书名查询书籍</li>
+             <li>通过作者查询书籍</li>
+             <li>点击图书题目获取书籍及作者详细信息</li>
+             <li>添加书籍信息</li>
+             <li>删除书籍信息</li>
+             <li>更新书籍信息</li></ol>
+             
+          <h3>使用介绍</h3>
+             <ol>
+               <li>添加书籍ISBN、题目、作者ID、价格为必填项</li>
+               <li>ISBN 唯一，添加时做了重复检测</li>
+               <li>ISBN、作者ID、出版日期、价格做了格式检测</li>
+               <li>添加书籍时，若作者，不在作者库中，则要求增加作者信息</li>
+               <li>删除书籍时，不删除作者库信息</li>
+             </ol>
+             
+          <h3>实现介绍</h3>
+          <p class="">本图书管理系统通过后台Java + Tomcat + Struts + Mysql 实现，前端由 Bootstrap 实现。</p>
+          <p class= ""> 由于水平、时间有限，本系统难免有bug。如遇到问题，欢迎反馈，不甚感激。 QQ:1790328095
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </body>
+
 </html>
+  
+  
