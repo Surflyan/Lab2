@@ -65,7 +65,7 @@
              </ol>
              
           <h3>实现介绍</h3>
-          <p class="">本图书管理系统通过后台Java + Tomcat + Struts + Mysql 实现，前端由 Bootstrap 实现。</p>
+          <p class="">本图书管理系统通过后台Java + Tomcat + Struts + Mysql 实现，前端由 Bootstrap 实现。未做手机适配。</p>
           <p class= ""> 由于水平、时间有限，本系统难免有bug。如遇到问题，欢迎反馈，不甚感激。 QQ:1790328095
         </div>
       </div>

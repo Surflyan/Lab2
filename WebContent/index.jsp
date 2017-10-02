@@ -44,17 +44,17 @@
           <div class="carousel slide" data-ride="carousel">
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item active">
-                <img class="d-block img-fluid" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" data-holder-rendered="true">
+                <img class="d-block img-fluid" src="http://mpic.tiankong.com/c26/afe/c26afe4a5ab47a618e4b93d417f1663e/640.jpg" data-holder-rendered="true" height="800" width="1200">
                 <div class="carousel-caption">
-                  <h3>First slide label</h3>
-                  <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                  <h3>典雅的图书馆</h3>
+                 
                 </div>
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg" data-holder-rendered="true">
+                <img class="d-block img-fluid" src="http://mpic.tiankong.com/591/f55/591f5577d55604523965311a0c5d26ed/640.jpg" data-holder-rendered="true" height="800" width="1200">
                 <div class="carousel-caption">
-                  <h3>Second slide label</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <h3>现代的图书馆</h3>
+                 
                 </div>
               </div>
             </div>
