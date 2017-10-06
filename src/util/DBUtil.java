@@ -104,7 +104,7 @@ public class DBUtil {
 		return list;
 	}
 	
-	
+	//查询唯一性结果
 	@SuppressWarnings("rawtypes")
 	public Map getMap(String sql, String[] params) {
 		List list = getResultList(sql, params);
